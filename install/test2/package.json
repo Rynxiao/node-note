@@ -1,0 +1,22 @@
+{
+  "name": "test2",
+  "version": "1.0.0",
+  "description": "install package from folder",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "install",
+    "local"
+  ],
+  "author": "ryn",
+  "license": "MIT",
+  "dependencies": {
+    "test1": "file:../test1"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.4",
+    "npm_install_test": "^1.0.0"
+  }
+}
