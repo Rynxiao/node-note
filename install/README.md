@@ -178,7 +178,7 @@ console.log(exports);
 console.log("I'm from npm");
 ```
 
-![npm-package](./shot/npm-package.png)
+![npm-package](./shot/npm-pkg.png)
 
 ### 初始化包描述文件
 
