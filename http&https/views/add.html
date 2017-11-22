@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Books</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet">
+    <style>
+        h3 {
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>添加书籍</h3>
+    </div>
+    
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="inputBookName" class="col-sm-2 control-label">书名</label>
+            <div class="col-sm-6">
+                <input type="email" class="form-control" id="inputBookName" placeholder="请输入书名">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPrice" class="col-sm-2 control-label">书名</label>
+            <div class="input-group col-sm-6" style="padding: 0 15px;">
+                <div class="input-group-addon">￥</div>
+                <input type="number" class="form-control" id="inputPrice" placeholder="请输入价格">
+                <div class="input-group-addon">.00</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPublish" class="col-sm-2 control-label">出版社</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputPublish" placeholder="请输入出版社名称">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputAuthor" class="col-sm-2 control-label">作者</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputAuthor" placeholder="请输入作者名称">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputDescription" class="col-sm-2 control-label">描述</label>
+            <div class="col-sm-6">
+                <textarea class="form-control" rows="3" id="inputDescription" placeholder="请输入书籍简介"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="addBook" type="submit" class="btn btn-primary">添加</button>
+            </div>
+        </div>
+    </form>
+    
+    <script src="https://cdn.bootcss.com/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script>
+        var $addBook = $('#addBook');
+        var $bookName = $('#inputBookName');
+        var $price = $('#inputPrice');
+        var $publish = $('#inputPublish');
+        var $author = $('#inputAuthor');
+        var $description = $('#inputDescription');
+
+        $addBook.on('click', function(e) {
+            e.preventDefault();
+
+            $.ajax({
+                url: '/book/add',
+                type: 'post',
+                data: {
+                    name: $bookName.val(),
+                    price: $price.val(),
+                    publish: $publish.val(),
+                    author: $author.val(),
+                    description: $description.val()
+                },
+                success: function(res) {
+                    if (res.code === 200) {
+                        location.href = '/';
+                    }
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>

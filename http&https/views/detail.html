@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Detail</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.css" rel="stylesheet">
+    <style>
+        h3 {
+            padding: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h3>书籍详情</h3>
+    </div>
+    
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="inputBookName" class="col-sm-2 control-label">书名</label>
+            <div class="col-sm-6">
+                <input type="email" class="form-control" id="inputBookName" placeholder="请输入书名" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPrice" class="col-sm-2 control-label">书名</label>
+            <div class="input-group col-sm-6" style="padding: 0 15px;">
+                <div class="input-group-addon">￥</div>
+                <input type="number" class="form-control" id="inputPrice" placeholder="请输入价格" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPublish" class="col-sm-2 control-label">出版社</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputPublish" placeholder="请输入出版社名称" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputAuthor" class="col-sm-2 control-label">作者</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" id="inputAuthor" placeholder="请输入作者名称" disabled>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputDescription" class="col-sm-2 control-label">描述</label>
+            <div class="col-sm-6">
+                <textarea class="form-control" rows="3" id="inputDescription" placeholder="请输入书籍简介" disabled></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button id="returnBook" type="submit" class="btn btn-primary">返回</button>
+            </div>
+        </div>
+    </form>
+    
+    <script src="https://cdn.bootcss.com/jquery/2.2.2/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+    <script>
+        var $returnBook = $('#returnBook');
+        var $bookName = $('#inputBookName');
+        var $price = $('#inputPrice');
+        var $publish = $('#inputPublish');
+        var $author = $('#inputAuthor');
+        var $description = $('#inputDescription');
+
+        function urlArgs(){
+            var args = {};
+            var query = location.search.substring(1);
+            var pairs = query.split("&");
+            for(var i = 0;i < pairs.length; i++){
+                var pos = pairs[i].indexOf("=");
+                if(pos == -1) continue;
+                var name = pairs[i].substring(0, pos);
+                var value = pairs[i].substring(pos + 1);
+                value = decodeURIComponent(value);
+                args[name] = value;
+            }
+            return args;
+        }
+
+
+        var args = urlArgs();
+        var id = args.id;
+
+        $.ajax({
+            url: '/book/detail?id=' + id,
+            type: 'get',
+            success: function(res) {
+                if (res.code === 200) {
+                    var data = res.data && res.data[0];
+                    $bookName.val(data.name);
+                    $price.val(data.price);
+                    $publish.val(data.publish);
+                    $author.val(data.author);
+                    $description.val(data.description);
+                }
+            }
+        });
+
+        $returnBook.on('click', function(e) {
+            e.preventDefault();
+            location.href = '/';
+        });
+
+    </script>
+</body>
+</html>
