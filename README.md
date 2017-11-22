@@ -27,3 +27,5 @@ npm -v
 ## 其他及API分析
 
 [安装包](https://github.com/Rynxiao/node-note/tree/master/install)
+
+[小小图书馆](https://github.com/Rynxiao/node-note/tree/master/http%26https)
