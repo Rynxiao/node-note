@@ -305,8 +305,6 @@ function requestHandler(req, res) {
 
 关于`Promise`讲解，具体可以去这里看[http://es6.ruanyifeng.com/#docs/promise](http://es6.ruanyifeng.com/#docs/promise)
 
-下面来讲讲如何用`Async`和`Generator`实现
-
 ```javascript
 // Promise
 
@@ -350,6 +348,8 @@ function requestHandler(req, res) {
     });
 }
 ```
+
+下面来讲讲如何用`Async`和`Generator`实现
 
 ```javascript
 // Async
