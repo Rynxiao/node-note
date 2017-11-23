@@ -30,5 +30,7 @@ npm -v
 
 [事件](https://github.com/Rynxiao/node-note/tree/master/events)
 
+[buffer缓冲](https://github.com/Rynxiao/node-note/tree/master/buffer)
+
 [小小图书馆](https://github.com/Rynxiao/node-note/tree/master/http%26https)
 
