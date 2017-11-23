@@ -24,8 +24,11 @@ node -v
 npm -v
 > v5.0.3
 ```
-## 其他及API分析
+## 目录
 
 [安装包](https://github.com/Rynxiao/node-note/tree/master/install)
 
+[事件](https://github.com/Rynxiao/node-note/tree/master/events)
+
 [小小图书馆](https://github.com/Rynxiao/node-note/tree/master/http%26https)
+
