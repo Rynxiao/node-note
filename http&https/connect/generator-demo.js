@@ -47,7 +47,15 @@ function * test() {
 
     console.log(body); 
 
-    yield fun2(body);
+    if (body.id === 2) {
+        yield fun2(body);
+    } else {
+        yield new Promise(function(resolve, reject) {
+            resolve([]);
+        });
+    }
+
+    
 }
 
 // { id: 1 }

@@ -412,15 +412,16 @@ function requestHandler(req, res) {
     }
 
     var work = followControl();
-    var body = work.next();
-    if (body.id) {
-        var data = work.next(body);
-        if (data && data.length > 0) {
-            res.end(JSON.stringify(data));
-        } else {
-            res.end('[]');
-        }
-    }
+    work.next().value.then(function(body) {
+        work.next(body).value.then(function(data) {
+            var data = work.next(body);
+            if (data && data.length > 0) {
+                res.end(JSON.stringify(data));
+            } else {
+                res.end('[]');
+            }
+        })
+    })
 }
 
 ```
