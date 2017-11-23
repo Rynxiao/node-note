@@ -212,6 +212,219 @@ console.log(querystring.stringify(obj, '*', '-'));
 
 ### HTTP
 
+`http`模块中的明星函数莫过于`createServer`， 这个函数可以让我们快速地返回一个迷你服务器，类似这样的：
+
+```javascript
+var http = require('http');
+
+var server = http.createServer(function(req, res) {
+    res.end('Hello world!');
+});
+
+server.listen(3000, '127.0.0.1', function() {
+    console.log('server start on 127.0.0.1:3000');
+});
+```
+
+使用`node`运行这段函数之后，就可以在浏览器中输入`localhost:3000`来打开一个页面。其中，`req`是`node`中的标准输入流，`res`是标准可写流。关于这两个对象中的其他方式可以去中文网上去看 [http://nodejs.cn/api/http.html](http://nodejs.cn/api/http.html)
+
+常用到的方法： 
+
+```javascript
+requset.getHeader()
+request.write()
+request.end()
+request.socket
+
+response.writeHeader()
+response.write()
+response.socket
+response.end()
+response.finished
+
+server.listen()
+server.close()
+```
+
+**关于中间件**
+
+在请求到达和返回之前我们可能需要做一系列的操作，而这些操作上抽象出来的一些方法，在`node`中我们就可以把它叫做中间件。例如：上面的一个经典的迷你服务器的例子中：
+
+```javascript
+http.createServer(requestHandler);
+
+function requestHandler(req, res) {
+    // 1. 存在是否有请求体，若存在，则去解析
+    // 2. 解析请求体中是否有对应参数，如果有则去数据库查询
+    // 3. 返回请求数据库之后解析的数据
+}
+```
+
+那么，上面的实现按照金字塔的方法，可能是这样实现的：
+
+```javascript
+
+// 解析请求体
+function parseBody(req, cb) {
+    var body = parse(req);
+    cb(null, body);
+}
+
+// 查询数据
+function checkInDataBase(body, cb) {
+    var data = databaseLookUp(body.id);
+    cb(null, data);
+}
+
+// 处理数据
+function returnResult(data, res) {
+    if (data.length > 0) {
+        res.end(JSON.stringify(data));
+    } else {
+        res.end('[]');
+    }
+}
+
+function requestHandler(req, res) {
+    parseBody(req, function(err, body) {
+        checkInDataBase(body, function(err, data) {
+            returnResult(data, res);
+        })
+    })
+}
+
+```
+
+这就是基于回调的金字塔模型，可见如果嵌套的层次过多，代码将会十分丑陋。解决这类问题主要有以下几类方式：
+
+- Promise
+
+- Async
+
+- Generator
+
+关于`Promise`讲解，具体可以去这里看[http://es6.ruanyifeng.com/#docs/promise](http://es6.ruanyifeng.com/#docs/promise)
+
+下面来讲讲如何用`Async`和`Generator`实现
+
+```javascript
+// Promise
+
+function fun1(req) {
+    return new Promise(function(resolve, reject) {
+        parseBody(req, function(err, body) {
+            if (err) {
+                reject(err);
+            }
+
+            resolve(body);
+        });
+    });
+}
+
+function fun2(req, body) {
+    return new Promise(function(resolve, reject) {
+        checkInDataBase(body.id, function(err, data) {
+            if (err) {
+                reject(err);
+            }
+
+            resolve(data);
+        });
+    });
+}
+
+function fun3(data, res) {
+    if (data.length > 0) {
+        res.end(JSON.stringify(data));
+    } else {
+        res.end('[]');
+    }
+}
+
+function requestHandler(req, res) {
+    fun1(req).then(function(body) {
+        fun2(req, body).then(function(data) {
+            fun3(data, res);
+        })
+    });
+}
+```
+
+```javascript
+// Async
+
+var middlewares = [
+    function fun1(req, res, next) {
+        parseBody(req, function(err, body) {
+            if (err) {
+                next(err);
+            }
+            req.body = body;
+            next();
+        })
+    },
+    function fun2(req, res, next) {
+        checkInDataBase(req.body.id, function(err, data) {
+            if (err) {
+                next(err);
+            }
+
+            res.data = data;
+            next();
+        });
+    },
+    function fun3(req, res, next) {
+        returnResult(res.data, res);
+        next();
+    }
+];
+
+function requestHandler(req, res) {
+    var i = 0;
+
+    function next(err) {
+        // 遇到一个错误即终止
+        if (err) {
+            return res.end('error', err.toString());
+        }
+
+        if (i < middlewares.length) {
+            middlewares[++i](req, res, next);
+        }
+    }
+
+    // 首先触发第一个next
+    next();
+}
+```
+
+```javascript
+// Generator + Promise
+
+function requestHandler(req, res) {
+    function * followControl() {
+        // 注意此中 yield 之后的都是 Promise
+        // 例子可以参看文件夹中 http&https/connect/generator-demo.js
+
+        var body = yield parse(req);
+        yield checkInDataBase(body);
+    }
+
+    var work = followControl();
+    var body = work().next();
+    if (body.id) {
+        var data = work().next(body);
+        if (data && data.length > 0) {
+            res.end(JSON.stringify(data));
+        } else {
+            res.end('[]');
+        }
+    }
+}
+
+```
+
 ### superagent
 
 > SuperAgent is a small progressive client-side HTTP request library, and Node.js module with the same API, sporting many high-level HTTP client features
