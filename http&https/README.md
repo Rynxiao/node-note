@@ -246,7 +246,7 @@ server.listen()
 server.close()
 ```
 
-**关于中间件**
+### **关于中间件**
 
 在请求到达和返回之前我们可能需要做一系列的操作，而这些操作上抽象出来的一些方法，在`node`中我们就可以把它叫做中间件。例如：上面的一个经典的迷你服务器的例子中：
 
@@ -299,7 +299,7 @@ function requestHandler(req, res) {
 
 - Promise
 
-- Async
+- Async —— 异步流程控制库
 
 - Generator
 
@@ -425,6 +425,47 @@ function requestHandler(req, res) {
 }
 
 ```
+
+注：比较有名的`promise`处理库有`q`/`es6-promisify`，`generator`的通用库有`co`
+
+### **比较有名的中间件 [connect](https://github.com/senchalabs/connect)**
+
+其实是根据异步流程控制的方式来达到添加中间件的效果的。
+
+> Connect is an extensible HTTP server framework for node using "plugins" known as middleware.
+
+```javascript
+var connect = require('connect');
+var http = require('http');
+
+var app = connect();
+
+// gzip/deflate outgoing responses
+var compression = require('compression');
+app.use(compression());
+
+// store session state in browser cookie
+var cookieSession = require('cookie-session');
+app.use(cookieSession({
+    keys: ['secret1', 'secret2']
+}));
+
+// parse urlencoded request bodies into req.body
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
+
+// respond to all requests
+app.use(function(req, res){
+  res.end('Hello from Connect!\n');
+});
+
+//create node.js http server and listen on port
+http.createServer(app).listen(3000);
+```
+
+`connect`模快自身就是一个中间件，也可以作为一个服务器，connect模块就是采用的`Async`方式实现的。具体可以查看[https://github.com/alsotang/node-lessons/tree/master/lesson18](https://github.com/alsotang/node-lessons/tree/master/lesson18)中关于`connect`的分析。
+
+注：`Express`采用的是和`connect`库相同的方式实现的异步回调，而`Koa`则采用的是`Promise + Generator`的方式，在`Koa2`中则是`Aysnc/await`的方式
 
 ### superagent
 

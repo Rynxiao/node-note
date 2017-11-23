@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "http library",
   "main": "index.js",
-  "dependencies": {},
+  "dependencies": {
+    "connect": "^3.6.5"
+  },
   "devDependencies": {
+    "body-parser": "^1.18.2",
     "cheerio": "^1.0.0-rc.2",
+    "compression": "^1.7.1",
+    "cookie-session": "^2.0.0-beta.3",
     "superagent": "^3.8.1",
     "uuid": "^3.1.0"
   },
