@@ -399,6 +399,13 @@ function requestHandler(req, res) {
 }
 ```
 
+上面用middlewares+next完成了业务逻辑的 链式调用，而middlewares里的每个函数，都是一个 中间件。
+
+整体思路是：
+
+- 将所有 处理逻辑函数(中间件) 存储在一个list中；
+- 请求到达时 循环调用 list中的 处理逻辑函数(中间件)；
+
 ```javascript
 // Generator + Promise
 
