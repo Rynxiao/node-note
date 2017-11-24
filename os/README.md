@@ -243,3 +243,9 @@ console.log(os.type());
  */
 console.log(os.userInfo());
 ```
+
+### 操作系统监视器
+
+待完成
+
+

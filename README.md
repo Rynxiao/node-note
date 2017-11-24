@@ -36,11 +36,13 @@ npm -v
 
 [简易聊天室](https://github.com/Rynxiao/node-note/tree/master/net)
 
+[操作系统](https://github.com/Rynxiao/node-note/tree/master/os)
+
 ## 待完成
 
 [文件系统](https://github.com/Rynxiao/node-note/tree/master/fs)
 
-[操作系统](https://github.com/Rynxiao/node-note/tree/master/os)
-
 [进程](https://github.com/Rynxiao/node-note/tree/master/process)
+
+[地图路径监控](https://github.com/Rynxiao/node-note/tree/master/websocket)
 
