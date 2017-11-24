@@ -34,3 +34,5 @@ npm -v
 
 [小小图书馆](https://github.com/Rynxiao/node-note/tree/master/http%26https)
 
+[简易聊天室](https://github.com/Rynxiao/node-note/tree/master/net)
+
