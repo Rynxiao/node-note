@@ -19,7 +19,7 @@
 
 ```javascript
 node -v
-> v7.9.0
+> v7.9.0os
 
 npm -v
 > v5.0.3
@@ -39,6 +39,8 @@ npm -v
 ## 待完成
 
 [文件系统](https://github.com/Rynxiao/node-note/tree/master/fs)
+
+[操作系统](https://github.com/Rynxiao/node-note/tree/master/os)
 
 [进程](https://github.com/Rynxiao/node-note/tree/master/process)
 
