@@ -36,3 +36,9 @@ npm -v
 
 [简易聊天室](https://github.com/Rynxiao/node-note/tree/master/net)
 
+## 待完成
+
+[文件系统](https://github.com/Rynxiao/node-note/tree/master/fs)
+
+[进程](https://github.com/Rynxiao/node-note/tree/master/process)
+

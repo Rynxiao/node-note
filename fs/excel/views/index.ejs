@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="renderer" content="webkit">
+        <title><%= title %></title>
+        <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+        <link href="/javascripts/lib/jquery.toast.min.css" rel="stylesheet" type="text/css" />
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <div class="g-excel">
+            <h2 class="title">Hello Excel</h2>
+            <div class="upload">
+                <div class="container upload-wrapper">
+                    <div class="col-md-4 upload-area" id="upload">
+                        <!-- <form id="uploadForm" enctype="multipart/form-data" class="upload-form" method="post" accept-charset="utf-8">
+                            <input type="file" id="fileBtn">
+                        </form> -->
+                        <div class="upload-add">
+                            <i class="glyphicon glyphicon-plus"></i>
+                        </div>
+                    </div>
+                    <div class="col-md-7 file-list">
+                        <ul class="f-list" id="fList">
+                            <% 
+                                fileList.forEach(function(name, index) { 
+                                    var isTransformed = name.indexOf('ts-') !== -1;
+                            %>
+                                <li class="list-item" data-path="<%= fullList[index] %>">
+                                    <div class="text clearfix">
+                                        <span class="file-name"><%= name %></span> 
+                                        <div class="pull-right">
+                                            <span class="p-text hidden">100%</span>
+                                            <span class="p-flag hidden" style="margin-left:5px;">上传成功</span>
+                                            <span class="btn btn-link ts <%= isTransformed ? 'hidden' : '' %>">开始转换</span>
+                                            <span class="btn btn-link download <%= isTransformed ? '' : 'hidden' %>">下载表格</span>
+                                            <span class="btn btn-link delete">删除</span>
+                                        </div>
+                                    </div>
+                                    <div class="f-progress"></div>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="/javascripts/lib/shim.js"></script>
+        <script src="/javascripts/lib/jquery.min.js"></script>
+        <script src="/javascripts/lib/bootstrap.min.js"></script>
+        <script src="/javascripts/lib/jquery.toast.min.js"></script>
+        <script src="/javascripts/index.js"></script>
+    </body>
+</html>
