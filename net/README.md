@@ -113,9 +113,15 @@ var client = net.connect({ port: 8194 }, function() {
     });
 });
 ```
+**server**
+
 ![server](./shot/chat-server.png)
 
+**client1**
+
 ![client1](./shot/chat-client1.png)
+
+**client2**
 
 ![client2](./shot/chat-client2.png)
 
@@ -249,7 +255,11 @@ server.on('error', (e) => {
     }
 });
 ```
+**server**
+
 ![server](./shot/net-index.png)
+
+**client**
 
 ![telnet](./shot/net-index-telnet.png)
 
